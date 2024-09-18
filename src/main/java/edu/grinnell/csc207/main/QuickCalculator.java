@@ -17,8 +17,9 @@ public class QuickCalculator {
 
   /**
    * @param args take all of your calculations at the same time and do it in order.
+   * @throws Exception
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     PrintWriter pen = new PrintWriter(System.out, true);
     BFCalculator calculator = new BFCalculator();
     BFRegisterSet registerSet = new BFRegisterSet();
@@ -27,9 +28,10 @@ public class QuickCalculator {
         break;
       } else if (arg.startsWith("STORE")) {
         registerSet.store(arg.charAt(STOREINDEX), calculator.get());
+        pen.println("STORE " + arg.charAt(STOREINDEX) + " -> " + "STORED");
       } else {
         BigFraction result = InteractiveCalculator.calculate(arg, calculator, registerSet);
-        pen.println(arg + " = " + result);
+        pen.println(arg + " -> " + result);
       } //If statement
     } //For loop
   } //Main

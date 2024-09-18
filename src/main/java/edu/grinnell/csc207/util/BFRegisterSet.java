@@ -34,4 +34,18 @@ public class BFRegisterSet {
   public BigFraction get(char register) {
     return arr[(int) register - ASCIIA];
   } //get
+
+  /**
+   * @param register char of array
+   * @return whether the register is stored with value
+   */
+  public boolean isStored(String register) {
+    if (!register.matches("[a-z]")) {
+      return false;
+    } else if (this.arr[register.charAt(register.length() - 1)] == null) {
+      return false;
+    } else {
+      return true;
+    } //If statement
+  } // isStored
 } //BFRegisterSet

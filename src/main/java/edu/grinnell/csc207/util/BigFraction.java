@@ -44,8 +44,7 @@ public class BigFraction {
    *   The denominator of the fraction.
    */
   public BigFraction(int numerator, int denominator) {
-    this.num = BigInteger.valueOf(numerator);
-    this.denom = BigInteger.valueOf(denominator);
+    this (BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
   } // BigFraction(int, int)
 
   // +---------+------------------------------------------------------
@@ -53,6 +52,18 @@ public class BigFraction {
   // +---------+
 
   /**
+   * @param string string of fraction
+   */
+  public BigFraction(String string) {
+    String[] nums = string.split("/");
+    BigInteger numerator = BigInteger.valueOf(Integer.parseInt(nums[0]));
+    BigInteger denominator = BigInteger.valueOf(nums.length > 1 ? Integer.parseInt(nums[1]) : 1);
+    BigInteger gcd = numerator.gcd(denominator);
+    this.num = numerator.divide(gcd);
+    this.denom = denominator.divide(gcd);
+  } // BigFraction(String)
+
+/**
    * Express this fraction as a double.
    *
    * @return the fraction approxiamted as a double.
@@ -147,11 +158,9 @@ public class BigFraction {
     // Special case: It's zero
     if (this.num.equals(BigInteger.ZERO)) {
       return "0";
-    } // if it's zero
-
-    // Lump together the string represention of the numerator,
-    // a slash, and the string representation of the denominator
-    // return this.num.toString().concat("/").concat(this.denom.toString());
+    } else if (this.denom.equals(BigInteger.ONE)) {
+      return this.num + "";
+    } //If statement
     return this.num + "/" + this.denom;
   } // toString()
 

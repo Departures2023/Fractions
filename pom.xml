@@ -43,9 +43,7 @@
           <configuration>
             <mainClass>edu.grinnell.csc207.main.QuickCalculator</mainClass>
             <arguments>
-                        <argument>1/5 + 1/7</argument>
-                        <argument>STORE a</argument>
-                        <argument>a + a</argument>
+                        <argument>3/2 + 5/2</argument>
                     </arguments>
           </configuration>
         </plugin>
