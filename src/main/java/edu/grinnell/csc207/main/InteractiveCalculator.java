@@ -21,20 +21,25 @@ public class InteractiveCalculator {
    * @param element one element split by " "
    * @param registerSet take the array of registerSet
    * @return the input element in the form of BigFraction
-   * @throws Exception
    */
-  private static BigFraction readFraction(String element, BFRegisterSet registerSet)
-      throws Exception {
-    if (!registerSet.isStored(element)) {
-      throw new Exception("*** ERROR [Invalid expression] ***");
-    } else if (element.matches("[a-z]")) {
-      return registerSet.get(element.charAt(0));
-    } else {
-      String[] nums = element.split("/");
+  public static BigFraction readFraction(String element, BFRegisterSet registerSet) {
+    String[] nums = element.split("/");
+    if (nums[0].equals("")) {
+      System.err.println("FAILED [Invalid expression]");
+      System.exit(1);
+    } else if (nums[0].startsWith("-")) {
+      return new BigFraction(element);
+    } else if (nums.length > 1 && nums[1].startsWith("-")) {
+      return new BigFraction("-" + nums[0] + "/" + nums[1].substring(1));
+    } else if (Character.isDigit(nums[0].charAt(0))) {
       int numerator = Integer.parseInt(nums[0]);
       int denominator = nums.length > 1 ? Integer.parseInt(nums[1]) : 1;
       return new BigFraction(numerator, denominator);
+    } else if (!registerSet.isStored(element)) {
+      System.err.println("*** ERROR [Invalid expression] ***");
+      System.exit(1);
     } //If statement
+    return registerSet.get(element.charAt(0));
   } //Method
 
   /**
@@ -45,10 +50,11 @@ public class InteractiveCalculator {
    * @throws Exception
    */
   public static BigFraction calculate(String input,
-      BFCalculator calculator, BFRegisterSet registerSet) throws Exception {
+      BFCalculator calculator, BFRegisterSet registerSet) {
     String[] elements = input.split(" ");
     if (elements.length % 2 == 0) {
-      throw new Exception("*** ERROR [Invalid expression] ***");
+      System.err.println("*** ERROR [Invalid expression] ***");
+      System.exit(1);
     } //If statement
     calculator.clear();
     calculator.add(readFraction(elements[0], registerSet));
@@ -62,7 +68,8 @@ public class InteractiveCalculator {
       } else if (elements[i].equals("/")) {
         calculator.divide(readFraction(elements[i + 1], registerSet));
       } else {
-        throw new Exception("*** ERROR [Invalid expression] ***");
+        System.err.println("*** ERROR [Invalid expression] ***");
+        System.exit(1);
       } //If statement
     } //For loop
     return calculator.get();
@@ -86,12 +93,12 @@ public class InteractiveCalculator {
       if (input.equals("QUIT")) {
         break;
       } else if (input.startsWith("STORE")) {
-        if (!registerSet.isStored(input)) {
-          System.err.println("*** ERROR [Invalid expression] ***");
-          break;
-        } else {
+        if (Character.isLowerCase(input.charAt(STOREINDEX))) {
           registerSet.store(input.charAt(STOREINDEX), calculator.get());
           pen.println("STORED");
+        } else {
+          System.err.println("*** ERROR [STORE command received invalid register] ***");
+          break;
         } //if statement
       } else {
         pen.println(calculate(input, calculator, registerSet));

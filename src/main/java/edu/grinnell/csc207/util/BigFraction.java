@@ -58,6 +58,11 @@ public class BigFraction {
     String[] nums = string.split("/");
     BigInteger numerator = BigInteger.valueOf(Integer.parseInt(nums[0]));
     BigInteger denominator = BigInteger.valueOf(nums.length > 1 ? Integer.parseInt(nums[1]) : 1);
+    if (nums.length > 1 && nums[1].startsWith("-")) {
+      numerator = BigInteger.valueOf(Integer.parseInt("-" + nums[0]));
+      denominator = BigInteger.valueOf(nums.length > 1
+        ? Integer.parseInt(nums[1].substring(1)) : 1);
+    } //If Statement
     BigInteger gcd = numerator.gcd(denominator);
     this.num = numerator.divide(gcd);
     this.denom = denominator.divide(gcd);

@@ -20,7 +20,7 @@ public class BFCalculator {
    * @return lastVal
    */
   public BigFraction get() {
-    return lastVal;
+    return new BigFraction(lastVal.toString());
   } //get
 
   /**

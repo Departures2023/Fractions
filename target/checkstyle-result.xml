@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<checkstyle version="9.3">
-<file name="/home/tangkevi/csc207/miniprojects/Fractions/src/main/java/edu/grinnell/csc207/util/BFRegisterSet.java">
-<error line="45" column="12" severity="error" message="Conditional logic can be removed." source="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck"/>
-</file>
-</checkstyle>

@@ -40,12 +40,9 @@ public class BFRegisterSet {
    * @return whether the register is stored with value
    */
   public boolean isStored(String register) {
-    if (!register.matches("[a-z]")) {
+    if (!register.matches("[a-z]") || this.arr[(int) register.charAt(0) - ASCIIA] == null) {
       return false;
-    } else if (this.arr[register.charAt(register.length() - 1)] == null) {
-      return false;
-    } else {
-      return true;
     } //If statement
+    return true;
   } // isStored
 } //BFRegisterSet
